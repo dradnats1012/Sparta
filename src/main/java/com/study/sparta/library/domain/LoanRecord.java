@@ -1,4 +1,4 @@
-package com.study.sparta.domain;
+package com.study.sparta.library.domain;
 
 import java.time.LocalDate;
 

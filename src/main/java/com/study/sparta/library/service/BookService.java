@@ -1,11 +1,11 @@
-package com.study.sparta.service;
+package com.study.sparta.library.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.study.sparta.domain.Book;
-import com.study.sparta.repository.BookRepository;
+import com.study.sparta.library.domain.Book;
+import com.study.sparta.library.repository.BookRepository;
 
 import lombok.RequiredArgsConstructor;
 

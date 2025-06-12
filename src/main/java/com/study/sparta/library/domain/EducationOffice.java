@@ -1,12 +1,13 @@
-package com.study.sparta.domain;
-
-import java.time.LocalDate;
+package com.study.sparta.library.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,31 +16,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "loan_raw")
+@Table(name = "education_office")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoanRaw {
+public class EducationOffice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String region;
+    @Column(nullable = false)
+    private String name;
 
-    @Column(name = "education_office")
-    private String educationOffice;
-
-    @Column(name = "school_name")
-    private String schoolName;
-
-    private Integer grade;
-
-    @Column(name = "book_title")
-    private String bookTitle;
-
-    @Column(name = "loan_date")
-    private LocalDate loanDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id", nullable = false)
+    private Region region;
 }

@@ -1,12 +1,12 @@
-package com.study.sparta.controller;
+package com.study.sparta.library.controller;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.sparta.domain.Book;
-import com.study.sparta.service.BookService;
+import com.study.sparta.library.domain.Book;
+import com.study.sparta.library.service.BookService;
 
 import lombok.RequiredArgsConstructor;
 

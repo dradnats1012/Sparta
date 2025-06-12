@@ -1,12 +1,12 @@
-package com.study.sparta.service;
+package com.study.sparta.library.service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.study.sparta.dto.LoanRawDTO;
-import com.study.sparta.repository.LoanRawRepository;
+import com.study.sparta.library.dto.LoanRawDTO;
+import com.study.sparta.library.repository.LoanRawRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,6 @@ public class LoanRawService {
     private final LoanRawRepository loanRawRepository;
 
     public List<LoanRawDTO> getLoanRawDto(LocalDate startDate, LocalDate endDate) {
-        return loanRawRepository.findDTOByLoanDateBetween(startDate, endDate);
+        return loanRawRepository.findByLoanDateBetween(startDate, endDate);
     }
 }

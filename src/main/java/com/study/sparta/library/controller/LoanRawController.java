@@ -1,4 +1,4 @@
-package com.study.sparta.controller;
+package com.study.sparta.library.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.sparta.dto.LoanRawDTO;
-import com.study.sparta.service.LoanRawService;
+import com.study.sparta.library.dto.LoanRawDTO;
+import com.study.sparta.library.service.LoanRawService;
 
 import lombok.RequiredArgsConstructor;
 
