@@ -26,36 +26,33 @@ public class LocalStoreSyncWorker {
 
     @Async("taskExecutor")
     public CompletableFuture<Void> syncOneAsync(String insttCode, String regionName) {
-        //log.info("{} 동기화 시작 (insttCode: {})", regionName, insttCode);
+        log.info("{} 동기화 시작 (insttCode: {})", regionName, insttCode);
 
         int page = 1;
         int totalPages = 1;
         List<LocalStoreDTO> batch = new ArrayList<>();
 
         while (true) {
-            //log.info("API 호출 - {}, page {}", regionName, page);
             apiCallCount.incrementAndGet();
 
             LocalStoreApiPageResult result = apiClient.fetchLocalStores(insttCode, page);
 
             List<LocalStoreDTO> items = result.getItems();
             if (items == null || items.isEmpty()) {
-                //log.warn("{} page {} 에서 데이터 없음", regionName, page);
+                log.warn("{} page {} 에서 데이터 없음", regionName, page);
                 break;
             }
 
             if (page == 1) {
                 int totalCount = result.getTotalCount();
                 totalPages = (int) Math.ceil((double) totalCount / 1000.0);
-                //log.info("{} 총 페이지 수 계산됨: {}", regionName, totalPages);
             }
 
             batch.addAll(items);
 
             if (batch.size() >= 15000 || page == totalPages) {
-                //log.info("DB 저장 시도 - {} page {}", regionName, page);
                 jdbcRepository.upsertAll(batch);
-                //log.info("저장 완료 - {} page {}", regionName, page);
+                log.info("저장 완료 - {} page {}", regionName, page);
                 batch.clear();
             }
 
@@ -63,7 +60,7 @@ public class LocalStoreSyncWorker {
             if (page > totalPages) break;
         }
 
-        //log.info("{} 동기화 완료", regionName);
+        log.info("{} 동기화 완료", regionName);
         return CompletableFuture.completedFuture(null);
     }
 

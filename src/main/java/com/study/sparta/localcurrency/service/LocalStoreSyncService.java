@@ -23,19 +23,18 @@ public class LocalStoreSyncService {
 
     @Transactional
     public void syncAll() {
-        //log.info("전체 동기화 시작");
+        log.info("전체 동기화 시작");
 
         List<InstitutionCode> codes = institutionCodeRepository.findAll();
 
         List<CompletableFuture<Void>> futures = codes.stream()
             .map(code -> {
-                //log.info("병렬 처리 시작 - {}", code.getRegionName());
                 return worker.syncOneAsync(code.getInstitutionCode(), code.getRegionName());
             })
             .toList();
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-        //log.info("전체 API 호출 횟수: {}", worker.getApiCallCount());
-        //log.info("전체 동기화 완료");
+        log.info("전체 API 호출 횟수: {}", worker.getApiCallCount());
+        log.info("전체 동기화 완료");
     }
 }
