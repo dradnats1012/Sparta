@@ -10,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +17,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "institution_code")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class InstitutionCode {
 
     @Id
@@ -30,6 +26,7 @@ public class InstitutionCode {
     @Column(name = "region_name", nullable = false)
     private String regionName;
 
+    // TODO : code로 변경, 컴럼명도 변경
     @Column(name = "institution_code", nullable = false)
     private String institutionCode;
 

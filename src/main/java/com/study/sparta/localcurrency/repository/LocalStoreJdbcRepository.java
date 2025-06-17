@@ -21,23 +21,23 @@ public class LocalStoreJdbcRepository {
 
     public void upsertAll(List<LocalStoreDTO> storeList) {
         String sql = """
-            INSERT INTO local_store (
-                affiliate_name, local_bill, ctpv_name, sgg_name, road_addr,
-                lotno_addr, sector_name, main_prd, telno, instt_code, instt_name, crtr_ymd
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                local_bill = VALUES(local_bill),
-                ctpv_name = VALUES(ctpv_name),
-                sgg_name = VALUES(sgg_name),
-                lotno_addr = VALUES(lotno_addr),
-                sector_name = VALUES(sector_name),
-                main_prd = VALUES(main_prd),
-                telno = VALUES(telno),
-                instt_code = VALUES(instt_code),
-                instt_name = VALUES(instt_name),
-                crtr_ymd = VALUES(crtr_ymd)
-        """;
+                INSERT INTO local_store (
+                    affiliate_name, local_bill, ctpv_name, sgg_name, road_addr,
+                    lotno_addr, sector_name, main_prd, telno, instt_code, instt_name, crtr_ymd
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    local_bill = VALUES(local_bill),
+                    ctpv_name = VALUES(ctpv_name),
+                    sgg_name = VALUES(sgg_name),
+                    lotno_addr = VALUES(lotno_addr),
+                    sector_name = VALUES(sector_name),
+                    main_prd = VALUES(main_prd),
+                    telno = VALUES(telno),
+                    instt_code = VALUES(instt_code),
+                    instt_name = VALUES(instt_name),
+                    crtr_ymd = VALUES(crtr_ymd)
+            """;
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override

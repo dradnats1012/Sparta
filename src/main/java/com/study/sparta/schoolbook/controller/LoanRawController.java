@@ -1,4 +1,4 @@
-package com.study.sparta.library.controller;
+package com.study.sparta.schoolbook.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.study.sparta.library.dto.LoanRawDTO;
-import com.study.sparta.library.service.LoanRawService;
+import com.study.sparta.schoolbook.dto.LoanRawDTO;
+import com.study.sparta.schoolbook.service.LoanRawService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/loanRaw")
 @RequiredArgsConstructor
+@RequestMapping("/loans")
 public class LoanRawController {
 
     private final LoanRawService loanRawService;
@@ -27,14 +27,7 @@ public class LoanRawController {
         @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
         @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        long start = System.currentTimeMillis();
-
         List<LoanRawDTO> records = loanRawService.getLoanRawDto(startDate, endDate);
-
-        long end = System.currentTimeMillis();
-        System.out.println("조회 시간 : " + (end - start) + "ms");
-
         return ResponseEntity.ok(records);
     }
 }
-

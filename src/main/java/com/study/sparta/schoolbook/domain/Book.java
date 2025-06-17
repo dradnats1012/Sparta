@@ -1,4 +1,4 @@
-package com.study.sparta.library.domain;
+package com.study.sparta.schoolbook.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,21 +6,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "book")
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Book {
 
+    // TODO : 엔티티 아이디 Long으로 변경
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

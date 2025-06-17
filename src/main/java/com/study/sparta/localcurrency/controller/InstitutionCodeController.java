@@ -18,7 +18,7 @@ public class InstitutionCodeController {
     private final InstitutionCodeService service;
 
     @GetMapping
-    public ResponseEntity<GetInstitutionCodesDTO> getInstitutionCodes(){
+    public ResponseEntity<GetInstitutionCodesDTO> getInstitutionCodes() {
         return ResponseEntity.ok(service.getInstitutionCodes());
     }
 }

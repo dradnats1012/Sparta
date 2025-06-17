@@ -1,4 +1,4 @@
-package com.study.sparta.library.domain;
+package com.study.sparta.schoolbook.domain;
 
 import java.time.LocalDate;
 
@@ -8,19 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "loan_raw")
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class LoanRaw {
 
     @Id

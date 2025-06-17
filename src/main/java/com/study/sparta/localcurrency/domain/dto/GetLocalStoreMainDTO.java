@@ -10,7 +10,7 @@ public record GetLocalStoreMainDTO(
     String roadAddr
 ) {
 
-    public static GetLocalStoreMainDTO from(LocalStore store){
+    public static GetLocalStoreMainDTO from(LocalStore store) {
         return new GetLocalStoreMainDTO(
             store.getAffiliateName(),
             store.getLocalBill(),

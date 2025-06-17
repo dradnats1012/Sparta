@@ -1,4 +1,4 @@
-package com.study.sparta.library.dto;
+package com.study.sparta.schoolbook.dto;
 
 import java.time.LocalDate;
 

@@ -45,7 +45,7 @@ public class LocalStoreSyncWorker {
 
             if (page == 1) {
                 int totalCount = result.getTotalCount();
-                totalPages = (int) Math.ceil((double) totalCount / 1000.0);
+                totalPages = (int)Math.ceil(totalCount / 1000.0);
             }
 
             batch.addAll(items);
@@ -57,7 +57,8 @@ public class LocalStoreSyncWorker {
             }
 
             page++;
-            if (page > totalPages) break;
+            if (page > totalPages)
+                break;
         }
 
         log.info("{} 동기화 완료", regionName);

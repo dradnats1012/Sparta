@@ -1,4 +1,4 @@
-package com.study.sparta.localcurrency;
+package com.study.sparta.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

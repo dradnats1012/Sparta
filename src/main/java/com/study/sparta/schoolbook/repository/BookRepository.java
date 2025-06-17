@@ -1,10 +1,10 @@
-package com.study.sparta.library.repository;
+package com.study.sparta.schoolbook.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.Repository;
 
-import com.study.sparta.library.domain.Book;
+import com.study.sparta.schoolbook.domain.Book;
 
 public interface BookRepository extends Repository<Book, Integer> {
 

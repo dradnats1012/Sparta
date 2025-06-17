@@ -1,12 +1,12 @@
-package com.study.sparta.library.service;
+package com.study.sparta.schoolbook.service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.study.sparta.library.dto.LoanRawDTO;
-import com.study.sparta.library.repository.LoanRawRepository;
+import com.study.sparta.schoolbook.dto.LoanRawDTO;
+import com.study.sparta.schoolbook.repository.LoanRawRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

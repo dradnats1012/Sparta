@@ -21,12 +21,12 @@ public class LocalStoreService {
 
     private final LocalStoreRepository localStoreRepository;
 
-    public Page<GetLocalStoreMainDTO> getStores(String ctpv, String sgg, Pageable pageable){
+    public Page<GetLocalStoreMainDTO> getStores(String ctpv, String sgg, Pageable pageable) {
         return localStoreRepository.findByPage(ctpv, sgg, pageable);
     }
 
+    // TODO : 변수명 바꾸기
     public List<GetLocalStoreMainDTO> getLocalStoresByOffset(String ctpv, String sgg, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         return localStoreRepository.findByOffset(ctpv, sgg, size, page);
     }
 }
