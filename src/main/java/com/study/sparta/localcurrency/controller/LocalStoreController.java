@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/local-store")
+@RequestMapping("/local-stores")
 public class LocalStoreController {
 
     private final LocalStoreSyncService syncService;
