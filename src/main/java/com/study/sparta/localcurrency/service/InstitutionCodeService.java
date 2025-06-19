@@ -21,7 +21,7 @@ public class InstitutionCodeService {
         List<GetInstitutionCodeDTO> dtos = repository.findAll().stream()
             .map(e -> new GetInstitutionCodesDTO.GetInstitutionCodeDTO(
                 e.getRegionName(),
-                e.getInstitutionCode()
+                e.getCode()
             ))
             .toList();
 

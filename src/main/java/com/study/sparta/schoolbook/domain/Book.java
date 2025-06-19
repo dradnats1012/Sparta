@@ -15,10 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Book {
 
-    // TODO : 엔티티 아이디 Long으로 변경
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String title;

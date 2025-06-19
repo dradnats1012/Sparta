@@ -16,27 +16,27 @@ public interface LocalStoreRepository extends JpaRepository<LocalStore, Long> {
 
     @Query("""
         SELECT new com.study.sparta.localcurrency.domain.dto.GetLocalStoreMainDTO(
-            s.affiliateName, s.localBill, s.ctpvName, s.sggName, s.roadAddr
+            s.storeName, s.localBill, s.cityName, s.sggName, s.roadAddress
         )
         FROM LocalStore s
-        WHERE (:ctpv IS NULL OR :sgg IS NULL OR (s.ctpvName LIKE %:ctpv% AND s.sggName LIKE %:sgg%))
-          AND (:ctpv IS NULL OR s.ctpvName LIKE %:ctpv%)
-          AND (:sgg IS NULL OR s.sggName LIKE %:sgg%)
+        WHERE (:cityName IS NULL OR :sgg IS NULL OR (s.cityName LIKE %:cityName% AND s.sggName LIKE %:sggName%))
+          AND (:cityName IS NULL OR s.cityName LIKE %:cityName%)
+          AND (:sggName IS NULL OR s.sggName LIKE %:sggName%)
         """)
     Page<GetLocalStoreMainDTO> findByPage(
-        String ctpv, String sgg, Pageable pageable
+        String cityName, String sggName, Pageable pageable
     );
 
     @Query("""
         SELECT new com.study.sparta.localcurrency.domain.dto.GetLocalStoreMainDTO(
-            s.affiliateName, s.localBill, s.ctpvName, s.sggName, s.roadAddr
+            s.storeName, s.localBill, s.cityName, s.sggName, s.roadAddress
         )
         FROM LocalStore s
-        WHERE (:ctpv IS NULL OR s.ctpvName LIKE %:ctpv%)
-          AND (:sgg IS NULL OR s.sggName LIKE %:sgg%)
+        WHERE (:cityName IS NULL OR s.cityName LIKE %:cityName%)
+          AND (:sggName IS NULL OR s.sggName LIKE %:sggName%)
         ORDER BY s.id
         """)
     List<GetLocalStoreMainDTO> findByOffset(
-        String ctpv, String sgg, int size, int offset
+        String cityName, String sggName, int size, int offset
     );
 }

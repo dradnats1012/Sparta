@@ -21,14 +21,13 @@ public class InstitutionCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "region_name", nullable = false)
     private String regionName;
 
-    // TODO : code로 변경, 컴럼명도 변경
-    @Column(name = "institution_code", nullable = false)
-    private String institutionCode;
+    @Column(name = "code", nullable = false)
+    private String code;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

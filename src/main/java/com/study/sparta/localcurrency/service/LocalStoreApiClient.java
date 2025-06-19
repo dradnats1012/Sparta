@@ -29,7 +29,7 @@ public class LocalStoreApiClient {
             .fromHttpUrl("http://api.data.go.kr/openapi/tn_pubr_public_local_bill_api")
             .queryParam("serviceKey", SERVICE_KEY)
             .queryParam("pageNo", page)
-            .queryParam("numOfRows", 1000)
+            .queryParam("numOfRows", 1500)
             .queryParam("type", "json")
             .queryParam("instt_code", insttCode)
             .build(true)

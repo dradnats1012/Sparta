@@ -29,7 +29,7 @@ public class LocalStoreSyncService {
 
         List<CompletableFuture<Void>> futures = codes.stream()
             .map(code -> {
-                return worker.syncOneAsync(code.getInstitutionCode(), code.getRegionName());
+                return worker.syncOneAsync(code.getCode(), code.getRegionName());
             })
             .toList();
 

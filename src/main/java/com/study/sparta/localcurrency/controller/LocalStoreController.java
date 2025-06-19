@@ -34,22 +34,22 @@ public class LocalStoreController {
 
     @GetMapping("/page")
     public ResponseEntity<Page<GetLocalStoreMainDTO>> getLocalStoresByPage(
-        @RequestParam(required = false) String ctpv,
-        @RequestParam(required = false) String sgg,
+        @RequestParam(required = false) String cityName,
+        @RequestParam(required = false) String sggName,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(localStoreService.getStores(ctpv, sgg, pageable));
+        return ResponseEntity.ok(localStoreService.getStores(cityName, sggName, pageable));
     }
 
     @GetMapping("/offset")
     public List<GetLocalStoreMainDTO> getStoresOffset(
-        @RequestParam(required = false) String ctpv,
-        @RequestParam(required = false) String sgg,
+        @RequestParam(required = false) String cityName,
+        @RequestParam(required = false) String sggName,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
-        return localStoreService.getLocalStoresByOffset(ctpv, sgg, page, size);
+        return localStoreService.getLocalStoresByOffset(cityName, sggName, page, size);
     }
 }

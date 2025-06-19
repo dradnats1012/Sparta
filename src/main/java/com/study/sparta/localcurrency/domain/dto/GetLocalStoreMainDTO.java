@@ -3,20 +3,20 @@ package com.study.sparta.localcurrency.domain.dto;
 import com.study.sparta.localcurrency.domain.LocalStore;
 
 public record GetLocalStoreMainDTO(
-    String affiliateName,
+    String storeName,
     String localBill,
-    String ctpvName,
+    String cityName,
     String sggName,
-    String roadAddr
+    String roadAddress
 ) {
 
     public static GetLocalStoreMainDTO from(LocalStore store) {
         return new GetLocalStoreMainDTO(
-            store.getAffiliateName(),
+            store.getStoreName(),
             store.getLocalBill(),
-            store.getCtpvName(),
+            store.getCityName(),
             store.getSggName(),
-            store.getRoadAddr()
+            store.getRoadAddress()
         );
     }
 }

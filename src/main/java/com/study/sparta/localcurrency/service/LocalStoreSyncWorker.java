@@ -45,7 +45,7 @@ public class LocalStoreSyncWorker {
 
             if (page == 1) {
                 int totalCount = result.getTotalCount();
-                totalPages = (int)Math.ceil(totalCount / 1000.0);
+                totalPages = (int)Math.ceil(totalCount / 1500.0);
             }
 
             batch.addAll(items);

@@ -19,14 +19,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LocalStore {
 
-    //TODO : 의미론적 변수명으로 변경
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Schema(description = "가맹점명")
     @Column(name = "affiliate_name")
-    private String affiliateName;
+    private String storeName;
 
     @Schema(description = "사용가능지역화")
     @Column(name = "local_bill")
@@ -34,7 +33,7 @@ public class LocalStore {
 
     @Schema(description = "시도명")
     @Column(name = "ctpv_name")
-    private String ctpvName;
+    private String cityName;
 
     @Schema(description = "시군구명")
     @Column(name = "sgg_name")
@@ -42,11 +41,11 @@ public class LocalStore {
 
     @Schema(description = "소재지도로명주소")
     @Column(name = "road_addr", length = 512)
-    private String roadAddr;
+    private String roadAddress;
 
     @Schema(description = "소재지지번주소")
     @Column(name = "lotno_addr")
-    private String lotnoAddr;
+    private String lotnoAddress;
 
     @Schema(description = "업종명")
     @Column(name = "sector_name")
@@ -54,50 +53,50 @@ public class LocalStore {
 
     @Schema(description = "주요상품")
     @Column(name = "main_prd")
-    private String mainPrd;
+    private String mainProduct;
 
     @Schema(description = "전화번호")
     @Column(name = "telno")
-    private String telno;
+    private String telNumber;
 
     @Schema(description = "제공기관코드")
     @Column(name = "instt_code")
-    private String insttCode;
+    private String institutionCode;
 
     @Schema(description = "제공기관기관명")
     @Column(name = "instt_name")
-    private String insttName;
+    private String institutionName;
 
     @Schema(description = "데이터기준일자")
     @Column(name = "crtr_ymd")
-    private LocalDate crtrYmd;
+    private LocalDate createdAt;
 
     @Builder
     public LocalStore(
-        String affiliateName,
+        String storeName,
         String localBill,
-        String ctpvName,
+        String cityName,
         String sggName,
-        String roadAddr,
-        String lotnoAddr,
+        String roadAddress,
+        String lotnoAddress,
         String sectorName,
-        String mainPrd,
-        String telno,
-        String insttCode,
-        String insttName,
-        LocalDate crtrYmd
+        String mainProduct,
+        String telNumber,
+        String institutionCode,
+        String institutionName,
+        LocalDate createdAt
     ) {
-        this.affiliateName = affiliateName;
+        this.storeName = storeName;
         this.localBill = localBill;
-        this.ctpvName = ctpvName;
+        this.cityName = cityName;
         this.sggName = sggName;
-        this.roadAddr = roadAddr;
-        this.lotnoAddr = lotnoAddr;
+        this.roadAddress = roadAddress;
+        this.lotnoAddress = lotnoAddress;
         this.sectorName = sectorName;
-        this.mainPrd = mainPrd;
-        this.telno = telno;
-        this.insttCode = insttCode;
-        this.insttName = insttName;
-        this.crtrYmd = crtrYmd;
+        this.mainProduct = mainProduct;
+        this.telNumber = telNumber;
+        this.institutionCode = institutionCode;
+        this.institutionName = institutionName;
+        this.createdAt = createdAt;
     }
 }
