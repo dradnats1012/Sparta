@@ -3,7 +3,7 @@ package com.study.sparta.schoolbook.dto;
 import java.time.LocalDate;
 
 public record LoanRawDTO(
-    Integer id,
+    Long id,
     String schoolName,
     String bookTitle,
     Integer grade,
