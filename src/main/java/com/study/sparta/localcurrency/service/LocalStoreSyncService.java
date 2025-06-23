@@ -18,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class LocalStoreSyncService {
 
-    private final InstitutionCodeRepository institutionCodeRepository;
     private final LocalStoreSyncWorker worker;
+    private final LocalStoreCleanService localStoreCleanService;
+    private final InstitutionCodeRepository institutionCodeRepository;
 
     @Transactional
     public void syncAll() {
@@ -34,7 +35,20 @@ public class LocalStoreSyncService {
             .toList();
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
         log.info("전체 API 호출 횟수: {}", worker.getApiCallCount());
         log.info("전체 동기화 완료");
+
+        localStoreCleanService.upsertCleanedStores();
+    }
+
+    @Transactional
+    public void upsertCleanedStores() {
+        log.info("정제테이블 동기화 시작");
+        long start = System.currentTimeMillis();
+        localStoreCleanService.upsertCleanedStores();
+        long end = System.currentTimeMillis();
+        log.info(end - start + "ms");
+        log.info("정제테이블 동기화 완료");
     }
 }

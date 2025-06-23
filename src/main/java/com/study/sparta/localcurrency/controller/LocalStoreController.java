@@ -1,7 +1,5 @@
 package com.study.sparta.localcurrency.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,24 +30,29 @@ public class LocalStoreController {
         return ResponseEntity.ok("동기화 완료");
     }
 
-    @GetMapping("/page")
-    public ResponseEntity<Page<GetLocalStoreMainDTO>> getLocalStoresByPage(
-        @RequestParam(required = false) String cityName,
-        @RequestParam(required = false) String sggName,
+    @PostMapping("/sync/clean")
+    public ResponseEntity<String> upsertCleanedStores() {
+        syncService.upsertCleanedStores();
+        return ResponseEntity.ok("파이프라인 완료");
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<Page<GetLocalStoreMainDTO>> getLocalStoresByStoreName(
+        @RequestParam(required = false) String storeName,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(localStoreService.getStores(cityName, sggName, pageable));
+        return ResponseEntity.ok(localStoreService.getStoresByStoreName(storeName, pageable));
     }
 
-    @GetMapping("/offset")
-    public List<GetLocalStoreMainDTO> getStoresOffset(
-        @RequestParam(required = false) String cityName,
-        @RequestParam(required = false) String sggName,
+    @GetMapping("/region")
+    public ResponseEntity<Page<GetLocalStoreMainDTO>> getStoresByRegion(
+        @RequestParam(required = false) String region,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
-        return localStoreService.getLocalStoresByOffset(cityName, sggName, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(localStoreService.getStoresByRegion(region, pageable));
     }
 }
