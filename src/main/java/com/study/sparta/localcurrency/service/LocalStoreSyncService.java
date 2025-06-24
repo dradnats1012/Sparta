@@ -39,7 +39,9 @@ public class LocalStoreSyncService {
         log.info("전체 API 호출 횟수: {}", worker.getApiCallCount());
         log.info("전체 동기화 완료");
 
+        log.info("정제테이블 동기화 시작");
         localStoreCleanService.upsertCleanedStores();
+        log.info("정제테이블 동기화 완료");
     }
 
     @Transactional

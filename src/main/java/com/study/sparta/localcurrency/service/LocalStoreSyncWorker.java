@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.study.sparta.localcurrency.domain.dto.LocalStoreApiPageResult;
 import com.study.sparta.localcurrency.domain.dto.LocalStoreDTO;
-import com.study.sparta.localcurrency.repository.LocalStoreJdbcRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,47 +21,81 @@ public class LocalStoreSyncWorker {
 
     private final AtomicInteger apiCallCount = new AtomicInteger(0);
     private final LocalStoreApiClient apiClient;
-    private final LocalStoreJdbcRepository jdbcRepository;
+    private final LocalStoreSaveService saveService;
 
     @Async("taskExecutor")
     public CompletableFuture<Void> syncOneAsync(String insttCode, String regionName) {
-        log.info("{} 동기화 시작 (insttCode: {})", regionName, insttCode);
+        log.info("➡ {} 동기화 시작 (insttCode: {})", regionName, insttCode);
 
+        int totalPages = calculateTotalPages(insttCode);
         int page = 1;
-        int totalPages = 1;
         List<LocalStoreDTO> batch = new ArrayList<>();
 
-        while (true) {
-            apiCallCount.incrementAndGet();
-
-            LocalStoreApiPageResult result = apiClient.fetchLocalStores(insttCode, page);
-
-            List<LocalStoreDTO> items = result.getItems();
-            if (items == null || items.isEmpty()) {
-                log.warn("{} page {} 에서 데이터 없음", regionName, page);
-                break;
-            }
-
-            if (page == 1) {
-                int totalCount = result.getTotalCount();
-                totalPages = (int)Math.ceil(totalCount / 1500.0);
-            }
+        while (page <= totalPages) {
+            List<LocalStoreDTO> items = fetchPage(insttCode, page);
+            if (items.isEmpty()) break;
 
             batch.addAll(items);
 
-            if (batch.size() >= 15000 || page == totalPages) {
-                jdbcRepository.upsertAll(batch);
-                log.info("저장 완료 - {} page {}", regionName, page);
+            if (shouldSaveNow(batch.size(), page, totalPages)) {
+                saveBatch(batch, regionName, page);
                 batch.clear();
             }
 
             page++;
-            if (page > totalPages)
-                break;
         }
 
         log.info("{} 동기화 완료", regionName);
         return CompletableFuture.completedFuture(null);
+    }
+
+    private int calculateTotalPages(String insttCode) {
+        try {
+            LocalStoreApiPageResult result = apiClient.fetchLocalStores(insttCode, 1);
+            return (int) Math.ceil(result.getTotalCount() / 1500.0);
+        } catch (Exception e) {
+            log.error("페이지 수 계산 실패 (insttCode: {})", insttCode, e);
+            return 0;
+        }
+    }
+
+    private List<LocalStoreDTO> fetchPage(String insttCode, int page) {
+        try {
+            apiCallCount.incrementAndGet();
+            LocalStoreApiPageResult result = apiClient.fetchLocalStores(insttCode, page);
+            return result.getItems() != null ? result.getItems() : List.of();
+        } catch (Exception e) {
+            log.error("API 호출 실패 (insttCode: {}, page: {})", insttCode, page, e);
+            return List.of();
+        }
+    }
+
+    private boolean shouldSaveNow(int batchSize, int page, int totalPages) {
+        return batchSize >= 10000 || page == totalPages;
+    }
+
+    private void saveBatch(List<LocalStoreDTO> batch, String regionName, int page) {
+        int attempts = 0;
+        boolean success = false;
+
+        while (attempts < 3 && !success) {
+            try {
+                saveService.saveStores(batch);
+                log.info("저장 완료 - region : {}, page : {}", regionName, page);
+                success = true;
+            } catch (Exception e) {
+                attempts++;
+                log.warn("저장 실패 - region : {}, page : {}, attempt : {}/3", regionName, page, attempts);
+
+                if (attempts == 3) {
+                    log.error("저장 실패 최종 - region : {}, page : {}, 에러 : {}", regionName, page, e.getMessage(), e);
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {}
+            }
+        }
     }
 
     public int getApiCallCount() {
