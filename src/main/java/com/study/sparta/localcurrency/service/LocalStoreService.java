@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class LocalStoreService {
 
-    // TODO : 정제된 테이블 바라보도록 수정하기
     private final LocalStoreCleanedRepository localStoreRepository;
 
     public Page<GetLocalStoreMainDTO> getStoresByStoreName(String storeName, Pageable pageable) {
