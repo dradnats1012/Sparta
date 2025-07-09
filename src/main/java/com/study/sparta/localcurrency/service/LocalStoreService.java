@@ -27,4 +27,9 @@ public class LocalStoreService {
         Page<LocalStoreCleaned> stores = localStoreRepository.findAllByRegion(region, pageable);
         return stores.map(GetLocalStoreMainDTO::from);
     }
+
+    public Page<GetLocalStoreMainDTO> getStoresByDistance(Double latitude, Double longitude, Pageable pageable) {
+        Page<LocalStoreCleaned> stores = localStoreRepository.findByDistance(latitude, longitude, 3000, pageable);
+        return stores.map(GetLocalStoreMainDTO::from);
+    }
 }

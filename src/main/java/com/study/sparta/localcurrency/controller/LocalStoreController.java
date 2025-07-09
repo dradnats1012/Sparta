@@ -40,4 +40,15 @@ public class LocalStoreController {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(localStoreService.getStoresByRegion(region, pageable));
     }
+
+    @GetMapping("/nearby")
+    public ResponseEntity<Page<GetLocalStoreMainDTO>> getStoresByDistance(
+        @RequestParam Double latitude,
+        @RequestParam Double longitude,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "30") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude, pageable));
+    }
 }
