@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loans")
+@RequestMapping("/api/v1/loans")
 public class LoanRawController {
 
     private final LoanRawService loanRawService;

@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/institutions")
+@RequestMapping("/api/v1/institutions")
 public class InstitutionCodeController {
 
     private final InstitutionCodeService service;
