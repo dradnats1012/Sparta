@@ -2,6 +2,8 @@ package com.study.sparta.localcurrency.domain;
 
 import java.time.LocalDate;
 
+import org.locationtech.jts.geom.Point;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,6 +65,19 @@ public class LocalStoreCleaned {
     @Column(name = "created_at")
     private LocalDate createdAt;
 
+    @Schema(description = "위도")
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Schema(description = "경도")
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Schema(description = "위치정보")
+    @Column(name = "location", columnDefinition = "POINT")
+    private Point location;
+
+
     @Builder
     public LocalStoreCleaned(
         String storeName,
@@ -74,7 +89,10 @@ public class LocalStoreCleaned {
         String telNumber,
         String institutionCode,
         String institutionName,
-        LocalDate createdAt
+        LocalDate createdAt,
+        Double latitude,
+        Double longitude,
+        Point location
     ) {
         this.storeName = storeName;
         this.localBill = localBill;
@@ -86,5 +104,8 @@ public class LocalStoreCleaned {
         this.institutionCode = institutionCode;
         this.institutionName = institutionName;
         this.createdAt = createdAt;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.location = location;
     }
 }
