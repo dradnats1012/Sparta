@@ -1,5 +1,7 @@
 package com.study.sparta.localcurrency.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,8 +30,9 @@ public class LocalStoreService {
         return stores.map(GetLocalStoreMainDTO::from);
     }
 
-    public Page<GetLocalStoreMainDTO> getStoresByDistance(Double latitude, Double longitude, Pageable pageable) {
-        Page<LocalStoreCleaned> stores = localStoreRepository.findByDistance(latitude, longitude, 3000, pageable);
-        return stores.map(GetLocalStoreMainDTO::from);
+    public List<GetLocalStoreMainDTO> getStoresByDistance(Double latitude, Double longitude) {
+        List<LocalStoreCleaned> stores = localStoreRepository.findByDistance(latitude, longitude, 3000);
+        return stores.stream().map(GetLocalStoreMainDTO::from).toList();
     }
 }
+

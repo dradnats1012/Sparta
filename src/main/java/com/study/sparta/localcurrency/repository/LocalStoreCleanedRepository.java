@@ -1,5 +1,7 @@
 package com.study.sparta.localcurrency.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,5 +47,5 @@ public interface LocalStoreCleanedRepository extends JpaRepository<LocalStoreCle
             """,
         nativeQuery = true
     )
-    Page<LocalStoreCleaned> findByDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("distance") Integer distance, Pageable pageable);
+    List<LocalStoreCleaned> findByDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("distance") Integer distance);
 }

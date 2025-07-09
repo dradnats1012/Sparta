@@ -1,5 +1,7 @@
 package com.study.sparta.localcurrency.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,13 +44,10 @@ public class LocalStoreController {
     }
 
     @GetMapping("/nearby")
-    public ResponseEntity<Page<GetLocalStoreMainDTO>> getStoresByDistance(
+    public ResponseEntity<List<GetLocalStoreMainDTO>> getStoresByDistance(
         @RequestParam Double latitude,
-        @RequestParam Double longitude,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "30") int size
+        @RequestParam Double longitude
     ) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude, pageable));
+        return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude));
     }
 }
