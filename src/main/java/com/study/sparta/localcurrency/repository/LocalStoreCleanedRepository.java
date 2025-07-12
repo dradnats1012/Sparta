@@ -43,7 +43,7 @@ public interface LocalStoreCleanedRepository extends JpaRepository<LocalStoreCle
     @Query(
         value = """
                 SELECT * FROM local_store_cleaned l 
-                 WHERE ST_Distance_Sphere(l.location, ST_SRID(POINT(:longitude, :latitude), 4326)) <= :distance
+                 WHERE MBRContains(ST_BUFFER(ST_SRID(POINT(:longitude, :latitude), 4326), :distance), location) 
             """,
         nativeQuery = true
     )
