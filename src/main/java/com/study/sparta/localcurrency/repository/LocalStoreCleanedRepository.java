@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
                                     import org.springframework.data.repository.query.Param;
@@ -19,33 +20,16 @@ public interface LocalStoreCleanedRepository extends JpaRepository<LocalStoreCle
             SELECT * FROM local_store_cleaned
             WHERE MATCH(store_name) AGAINST (:storeName IN NATURAL LANGUAGE MODE)
             """,
-        countQuery = """
-            SELECT COUNT(*) FROM local_store_cleaned
-            WHERE MATCH(store_name) AGAINST (:storeName IN NATURAL LANGUAGE MODE)
-            """,
         nativeQuery = true
     )
-    Page<LocalStoreCleaned> findAllByStoreName(String storeName, Pageable pageable);
+    Slice<LocalStoreCleaned> findAllByStoreName(String storeName, Pageable pageable);
 
     @Query(
         value = """
             SELECT * FROM local_store_cleaned
             WHERE MATCH(region) AGAINST (:region IN NATURAL LANGUAGE MODE)
             """,
-        countQuery = """
-            SELECT COUNT(*) FROM local_store_cleaned
-            WHERE MATCH(region) AGAINST (:region IN NATURAL LANGUAGE MODE)
-            """,
         nativeQuery = true
     )
-    Page<LocalStoreCleaned> findAllByRegion(String region, Pageable pageable);
-
-    @Query(
-        value = """
-                SELECT * FROM local_store_cleaned l 
-                 WHERE MBRContains(ST_BUFFER(ST_SRID(POINT(:longitude, :latitude), 4326), :distance), location) 
-            """,
-        nativeQuery = true
-    )
-    List<LocalStoreCleaned> findByDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("distance") Integer distance);
+    Slice<LocalStoreCleaned> findAllByRegion(String region, Pageable pageable);
 }

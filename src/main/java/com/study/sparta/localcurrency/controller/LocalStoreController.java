@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class LocalStoreController {
     private final LocalStoreService localStoreService;
 
     @GetMapping("/name")
-    public ResponseEntity<Page<GetLocalStoreMainDTO>> getLocalStoresByStoreName(
+    public ResponseEntity<Slice<GetLocalStoreMainDTO>> getLocalStoresByStoreName(
         @RequestParam(required = false) String storeName,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
@@ -34,7 +35,7 @@ public class LocalStoreController {
     }
 
     @GetMapping("/region")
-    public ResponseEntity<Page<GetLocalStoreMainDTO>> getStoresByRegion(
+    public ResponseEntity<Slice<GetLocalStoreMainDTO>> getStoresByRegion(
         @RequestParam(required = false) String region,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
@@ -46,8 +47,9 @@ public class LocalStoreController {
     @GetMapping("/nearby")
     public ResponseEntity<List<GetLocalStoreMainDTO>> getStoresByDistance(
         @RequestParam Double latitude,
-        @RequestParam Double longitude
+        @RequestParam Double longitude,
+        @RequestParam int distance
     ) {
-        return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude));
+        return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude, distance));
     }
 }
