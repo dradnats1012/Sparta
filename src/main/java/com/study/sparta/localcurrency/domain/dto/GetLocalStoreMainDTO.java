@@ -1,6 +1,7 @@
 package com.study.sparta.localcurrency.domain.dto;
 
 import com.study.sparta.localcurrency.domain.LocalStoreCleaned;
+import com.study.sparta.localcurrency.domain.LocalStoreCoordinate;
 
 public record GetLocalStoreMainDTO(
     Long id,
@@ -12,7 +13,19 @@ public record GetLocalStoreMainDTO(
     Double longitude
 ) {
 
-    public static GetLocalStoreMainDTO from(LocalStoreCleaned store) {
+    public static GetLocalStoreMainDTO fromLocalStoreCleaned(LocalStoreCleaned store) {
+        return new GetLocalStoreMainDTO(
+            store.getId(),
+            store.getStoreName(),
+            store.getLocalBill(),
+            store.getRegion(),
+            store.getAddress(),
+            store.getLatitude(),
+            store.getLongitude()
+        );
+    }
+
+    public static GetLocalStoreMainDTO fromLocalStoreCoordinate(LocalStoreCoordinate store) {
         return new GetLocalStoreMainDTO(
             store.getId(),
             store.getStoreName(),
