@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.study.sparta.localcurrency.domain.InstitutionCode;
 import com.study.sparta.localcurrency.domain.dto.GetInstitutionCodesDTO;
+import com.study.sparta.localcurrency.domain.dto.GetInstitutionNamesDTO;
 import com.study.sparta.localcurrency.repository.InstitutionCodeRepository;
 
 import lombok.AllArgsConstructor;
@@ -26,5 +28,13 @@ public class InstitutionCodeService {
             .toList();
 
         return new GetInstitutionCodesDTO(dtos);
+    }
+
+    public GetInstitutionNamesDTO getInstitutionNames() {
+        List<String> regionNames = repository.findAll().stream()
+            .map(InstitutionCode::getRegionName)
+            .toList();
+
+        return new GetInstitutionNamesDTO(regionNames);
     }
 }
