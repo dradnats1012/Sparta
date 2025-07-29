@@ -40,3 +40,4 @@ application.yml
 .env
 
 /logs
+my.cnf
