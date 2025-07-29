@@ -2,7 +2,6 @@ package com.study.sparta.localcurrency.controller;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -24,7 +23,7 @@ public class LocalStoreController {
 
     private final LocalStoreService localStoreService;
 
-    @GetMapping("/name")
+    @GetMapping("/search/name")
     public ResponseEntity<Slice<GetLocalStoreMainDTO>> getLocalStoresByStoreName(
         @RequestParam(required = false) String storeName,
         @RequestParam(defaultValue = "0") int page,
@@ -34,8 +33,8 @@ public class LocalStoreController {
         return ResponseEntity.ok(localStoreService.getStoresByStoreName(storeName, pageable));
     }
 
-    @GetMapping("/region")
-    public ResponseEntity<Slice<GetLocalStoreMainDTO>> getStoresByRegion(
+    @GetMapping("/search/region")
+    public ResponseEntity<Slice<GetLocalStoreMainDTO>> searchStoresByRegion(
         @RequestParam(required = false) String region,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
@@ -51,5 +50,15 @@ public class LocalStoreController {
         @RequestParam int distance
     ) {
         return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude, distance));
+    }
+
+    @GetMapping("/region")
+    public ResponseEntity<Slice<GetLocalStoreMainDTO>> getStoresByRegion(
+        @RequestParam String region,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(localStoreService.getStoresByRegion(region, pageable));
     }
 }
