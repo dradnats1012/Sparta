@@ -11,12 +11,5 @@ import com.study.sparta.localcurrency.domain.LocalStoreCoordinate;
 
 public interface LocalStoreCoordinateRepository extends JpaRepository<LocalStoreCoordinate, Long> {
 
-    @Query(
-        value = """
-                SELECT * FROM local_store_coordinate l 
-                 WHERE MBRContains(ST_BUFFER(ST_SRID(POINT(:longitude, :latitude), 4326), :distance), location) 
-            """,
-        nativeQuery = true
-    )
-    List<LocalStoreCoordinate> findByDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("distance") Integer distance);
+
 }
