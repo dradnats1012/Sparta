@@ -10,14 +10,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final CorsProperties corsProperties;
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins(corsProperties.allowedOrigins().toArray(new String[0]))
+            .allowedOrigins("*")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
-            .allowedHeaders("*")
-            .allowCredentials(true);
+            .allowedHeaders("*");
     }
 }
