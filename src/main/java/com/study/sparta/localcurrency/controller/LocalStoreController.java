@@ -55,7 +55,7 @@ public class LocalStoreController {
     }
 
     @GetMapping("/v2/nearby")
-    public ResponseEntity<List<GetLocalStoreMainDTO>> getStoresByLineString(
+    public ResponseEntity<List<GetSimpleLocalStoreDTO>> getStoresByLineString(
         @RequestParam Double leftLatitude,
         @RequestParam Double leftLongitude,
         @RequestParam Double rightLatitude,

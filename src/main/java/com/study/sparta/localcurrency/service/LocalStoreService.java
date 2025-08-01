@@ -38,12 +38,12 @@ public class LocalStoreService {
         return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCleaned).toList();
     }
 
-    public List<GetLocalStoreMainDTO> getStoresByLineString(Double leftLatitude, Double leftLongitude,
+    public List<GetSimpleLocalStoreDTO> getStoresByLineString(Double leftLatitude, Double leftLongitude,
         Double rightLatitude, Double rightLongitude) {
         List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresInBoundingBox(
             leftLatitude, leftLongitude, rightLatitude, rightLongitude
         );
-        return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCleaned).toList();
+        return stores.stream().map(GetSimpleLocalStoreDTO::from).toList();
     }
 
     public List<GetSimpleLocalStoreDTO> getSimpleStores(Double latitude, Double longitude, int distance) {
