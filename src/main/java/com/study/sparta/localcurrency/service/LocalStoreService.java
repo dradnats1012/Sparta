@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.sparta.localcurrency.domain.LocalStoreCleaned;
-import com.study.sparta.localcurrency.domain.LocalStoreCoordinate;
 import com.study.sparta.localcurrency.domain.dto.GetLocalStoreMainDTO;
+import com.study.sparta.localcurrency.domain.dto.GetSimpleLocalStoreDTO;
 import com.study.sparta.localcurrency.repository.LocalStoreCleanedRepository;
-import com.study.sparta.localcurrency.repository.LocalStoreCoordinateRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class LocalStoreService {
 
     private final LocalStoreCleanedRepository localStoreCleanedRepository;
-    private final LocalStoreCoordinateRepository localStoreCoordinateRepository;
 
     public Slice<GetLocalStoreMainDTO> getStoresByStoreName(String storeName, Pageable pageable) {
         Slice<LocalStoreCleaned> stores = localStoreCleanedRepository.findAllByStoreName(storeName, pageable);
@@ -34,8 +32,30 @@ public class LocalStoreService {
     }
 
     public List<GetLocalStoreMainDTO> getStoresByDistance(Double latitude, Double longitude, int distance) {
-        List<LocalStoreCoordinate> stores = localStoreCoordinateRepository.findByDistance(latitude, longitude, distance);
-        return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCoordinate).toList();
+        List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresWithinDistanceByBuffer(
+            latitude, longitude, distance
+        );
+        return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCleaned).toList();
+    }
+
+    public List<GetLocalStoreMainDTO> getStoresByLineString(Double leftLatitude, Double leftLongitude,
+        Double rightLatitude, Double rightLongitude) {
+        List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresInBoundingBox(
+            leftLatitude, leftLongitude, rightLatitude, rightLongitude
+        );
+        return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCleaned).toList();
+    }
+
+    public List<GetSimpleLocalStoreDTO> getSimpleStores(Double latitude, Double longitude, int distance) {
+        List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresWithinDistanceByBuffer(
+            latitude, longitude, distance
+        );
+        return stores.stream().map(GetSimpleLocalStoreDTO::from).toList();
+    }
+
+    public GetLocalStoreMainDTO getById(Long id) {
+        LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getById(id);
+        return GetLocalStoreMainDTO.fromLocalStoreCleaned(localStoreCleaned);
     }
 }
 
