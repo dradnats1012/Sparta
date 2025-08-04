@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/local-stores")
+@RequestMapping("/api/local-stores")
 public class LocalStoreController {
 
     private final LocalStoreService localStoreService;
@@ -54,8 +54,8 @@ public class LocalStoreController {
         return ResponseEntity.ok(localStoreService.getStoresByDistance(latitude, longitude, distance));
     }
 
-    @GetMapping("/v2/nearby")
-    public ResponseEntity<List<GetSimpleLocalStoreDTO>> getStoresByLineString(
+    @GetMapping("/nearby/linestring")
+    public ResponseEntity<List<GetLocalStoreMainDTO>> getStoresByLineString(
         @RequestParam Double leftLatitude,
         @RequestParam Double leftLongitude,
         @RequestParam Double rightLatitude,

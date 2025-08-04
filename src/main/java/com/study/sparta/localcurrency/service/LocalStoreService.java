@@ -23,27 +23,27 @@ public class LocalStoreService {
 
     public Slice<GetLocalStoreMainDTO> getStoresByStoreName(String storeName, Pageable pageable) {
         Slice<LocalStoreCleaned> stores = localStoreCleanedRepository.findAllByStoreName(storeName, pageable);
-        return stores.map(GetLocalStoreMainDTO::fromLocalStoreCleaned);
+        return stores.map(GetLocalStoreMainDTO::from);
     }
 
     public Slice<GetLocalStoreMainDTO> getStoresByRegion(String region, Pageable pageable) {
         Slice<LocalStoreCleaned> stores = localStoreCleanedRepository.findAllByRegion(region, pageable);
-        return stores.map(GetLocalStoreMainDTO::fromLocalStoreCleaned);
+        return stores.map(GetLocalStoreMainDTO::from);
     }
 
     public List<GetLocalStoreMainDTO> getStoresByDistance(Double latitude, Double longitude, int distance) {
         List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresWithinDistanceByBuffer(
             latitude, longitude, distance
         );
-        return stores.stream().map(GetLocalStoreMainDTO::fromLocalStoreCleaned).toList();
+        return stores.stream().map(GetLocalStoreMainDTO::from).toList();
     }
 
-    public List<GetSimpleLocalStoreDTO> getStoresByLineString(Double leftLatitude, Double leftLongitude,
+    public List<GetLocalStoreMainDTO> getStoresByLineString(Double leftLatitude, Double leftLongitude,
         Double rightLatitude, Double rightLongitude) {
         List<LocalStoreCleaned> stores = localStoreCleanedRepository.findStoresInBoundingBox(
             leftLatitude, leftLongitude, rightLatitude, rightLongitude
         );
-        return stores.stream().map(GetSimpleLocalStoreDTO::from).toList();
+        return stores.stream().map(GetLocalStoreMainDTO::from).toList();
     }
 
     public List<GetSimpleLocalStoreDTO> getSimpleStores(Double latitude, Double longitude, int distance) {
@@ -55,7 +55,7 @@ public class LocalStoreService {
 
     public GetLocalStoreMainDTO getById(Long id) {
         LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getById(id);
-        return GetLocalStoreMainDTO.fromLocalStoreCleaned(localStoreCleaned);
+        return GetLocalStoreMainDTO.from(localStoreCleaned);
     }
 }
 
