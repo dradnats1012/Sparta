@@ -1,15 +1,16 @@
 package com.study.sparta;
 
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
-
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Aspect
@@ -22,11 +23,11 @@ public class ConnectionUsageLogger {
     @Around("execution(* javax.sql.DataSource.getConnection(..))")
     public Object logConnectionUsage(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
-        Connection connection = (Connection) joinPoint.proceed();
+        Connection connection = (Connection)joinPoint.proceed();
 
         return Proxy.newProxyInstance(
             connection.getClass().getClassLoader(),
-            new Class[]{Connection.class},
+            new Class[] {Connection.class},
             (proxy, method, args) -> {
                 if (method.getName().equals("close")) {
                     long duration = System.currentTimeMillis() - start;

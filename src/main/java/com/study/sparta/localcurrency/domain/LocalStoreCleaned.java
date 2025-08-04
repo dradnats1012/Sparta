@@ -77,7 +77,6 @@ public class LocalStoreCleaned {
     @Column(name = "location", columnDefinition = "POINT")
     private Point location;
 
-
     @Builder
     public LocalStoreCleaned(
         String storeName,

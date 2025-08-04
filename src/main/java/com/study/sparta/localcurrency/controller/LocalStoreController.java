@@ -61,7 +61,8 @@ public class LocalStoreController {
         @RequestParam Double rightLatitude,
         @RequestParam Double rightLongitude
     ) {
-        return ResponseEntity.ok(localStoreService.getStoresByLineString(leftLatitude, leftLongitude, rightLatitude, rightLongitude));
+        return ResponseEntity.ok(
+            localStoreService.getStoresByLineString(leftLatitude, leftLongitude, rightLatitude, rightLongitude));
     }
 
     @GetMapping("/nearby/simple")
@@ -69,7 +70,7 @@ public class LocalStoreController {
         @RequestParam Double latitude,
         @RequestParam Double longitude,
         @RequestParam int distance
-    ){
+    ) {
         return ResponseEntity.ok(localStoreService.getSimpleStores(latitude, longitude, distance));
     }
 
@@ -86,7 +87,7 @@ public class LocalStoreController {
     @GetMapping("{id}")
     public ResponseEntity<GetLocalStoreMainDTO> getById(
         @PathVariable Long id
-    ){
+    ) {
         return ResponseEntity.ok(localStoreService.getById(id));
     }
 }
