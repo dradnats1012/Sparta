@@ -33,6 +33,7 @@ public class InstitutionCodeService {
     public GetInstitutionNamesDTO getInstitutionNames() {
         List<String> regionNames = repository.findAll().stream()
             .map(InstitutionCode::getRegionName)
+            .sorted()
             .toList();
 
         return new GetInstitutionNamesDTO(regionNames);
