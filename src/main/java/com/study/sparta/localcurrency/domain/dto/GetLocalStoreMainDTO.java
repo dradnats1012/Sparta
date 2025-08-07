@@ -14,7 +14,7 @@ public record GetLocalStoreMainDTO(
     Double longitude
 ) {
 
-    public static GetLocalStoreMainDTO from (LocalStoreCleaned store) {
+    public static GetLocalStoreMainDTO from(LocalStoreCleaned store) {
         return new GetLocalStoreMainDTO(
             store.getId(),
             store.getStoreName(),
