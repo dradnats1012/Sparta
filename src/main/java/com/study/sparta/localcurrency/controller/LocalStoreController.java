@@ -65,13 +65,15 @@ public class LocalStoreController {
             localStoreService.getStoresByLineString(leftLatitude, leftLongitude, rightLatitude, rightLongitude));
     }
 
-    @GetMapping("/nearby/simple")
+    @GetMapping("/nearby/marker")
     public ResponseEntity<List<GetSimpleLocalStoreDTO>> getSimpleStores(
-        @RequestParam Double latitude,
-        @RequestParam Double longitude,
-        @RequestParam int distance
+        @RequestParam Double leftLatitude,
+        @RequestParam Double leftLongitude,
+        @RequestParam Double rightLatitude,
+        @RequestParam Double rightLongitude
     ) {
-        return ResponseEntity.ok(localStoreService.getSimpleStores(latitude, longitude, distance));
+        return ResponseEntity.ok(
+            localStoreService.getSimpleStoresByLineString(leftLatitude, leftLongitude, rightLatitude, rightLongitude));
     }
 
     @GetMapping("/region")
