@@ -1,6 +1,8 @@
 package com.study.sparta.localcurrency.repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -10,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.study.sparta.localcurrency.domain.LocalStoreCleaned;
+import com.study.sparta.localcurrency.domain.dto.LocalStoreDTO;
 
 @Repository
 public interface LocalStoreCleanedRepository extends JpaRepository<LocalStoreCleaned, Long> {
@@ -50,8 +53,10 @@ public interface LocalStoreCleanedRepository extends JpaRepository<LocalStoreCle
         @Param("distance") int distance
     );
 
-    default LocalStoreCleaned getById(Long id) {
-        return findById(id)
+    Optional<LocalStoreCleaned> findByUuid(UUID uuid);
+
+    default LocalStoreCleaned getByUuid(UUID uuid) {
+        return findByUuid(uuid)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상점의 id입니다!"));
     }
 

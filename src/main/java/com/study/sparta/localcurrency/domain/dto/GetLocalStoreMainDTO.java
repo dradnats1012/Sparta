@@ -1,9 +1,11 @@
 package com.study.sparta.localcurrency.domain.dto;
 
+import java.util.UUID;
+
 import com.study.sparta.localcurrency.domain.LocalStoreCleaned;
 
 public record GetLocalStoreMainDTO(
-    Long id,
+    UUID uuid,
     String storeName,
     String localBill,
     String region,
@@ -16,7 +18,7 @@ public record GetLocalStoreMainDTO(
 
     public static GetLocalStoreMainDTO from(LocalStoreCleaned store) {
         return new GetLocalStoreMainDTO(
-            store.getId(),
+            store.getUuid(),
             store.getStoreName(),
             store.getLocalBill(),
             store.getRegion(),

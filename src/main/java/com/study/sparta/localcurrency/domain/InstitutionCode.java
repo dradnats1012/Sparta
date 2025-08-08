@@ -1,8 +1,11 @@
 package com.study.sparta.localcurrency.domain;
 
+import java.sql.Types;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,4 +34,8 @@ public class InstitutionCode {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @JdbcTypeCode(Types.BINARY)
+    @Column(name = "uuid", columnDefinition = "BINARY(16)", unique = true)
+    private UUID uuid;
 }

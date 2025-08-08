@@ -86,10 +86,10 @@ public class LocalStoreController {
         return ResponseEntity.ok(localStoreService.getStoresByRegion(region, pageable));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<GetLocalStoreMainDTO> getById(
-        @PathVariable Long id
+    @GetMapping("{uuidStr}")
+    public ResponseEntity<GetLocalStoreMainDTO> getByUuid(
+        @PathVariable String uuidStr
     ) {
-        return ResponseEntity.ok(localStoreService.getById(id));
+        return ResponseEntity.ok(localStoreService.getByUuid(uuidStr));
     }
 }

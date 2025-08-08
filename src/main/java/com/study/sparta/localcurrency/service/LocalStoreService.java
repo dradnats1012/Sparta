@@ -1,6 +1,7 @@
 package com.study.sparta.localcurrency.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -61,8 +62,10 @@ public class LocalStoreService {
         return stores.stream().map(GetSimpleLocalStoreDTO::from).toList();
     }
 
-    public GetLocalStoreMainDTO getById(Long id) {
-        LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getById(id);
+    public GetLocalStoreMainDTO getByUuid(String uuidStr) {
+        UUID uuid = UUID.fromString(uuidStr);
+
+        LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getByUuid(uuid);
         return GetLocalStoreMainDTO.from(localStoreCleaned);
     }
 }

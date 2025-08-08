@@ -1,7 +1,10 @@
 package com.study.sparta.localcurrency.domain;
 
+import java.sql.Types;
 import java.time.LocalDate;
+import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
 import org.locationtech.jts.geom.Point;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -77,6 +80,10 @@ public class LocalStoreCleaned {
     @Column(name = "location", columnDefinition = "POINT")
     private Point location;
 
+    @JdbcTypeCode(Types.BINARY)
+    @Column(name = "uuid", columnDefinition = "BINARY(16)", unique = true)
+    private UUID uuid;
+
     @Builder
     public LocalStoreCleaned(
         String storeName,
@@ -91,7 +98,8 @@ public class LocalStoreCleaned {
         LocalDate createdAt,
         Double latitude,
         Double longitude,
-        Point location
+        Point location,
+        UUID uuid
     ) {
         this.storeName = storeName;
         this.localBill = localBill;
@@ -106,5 +114,6 @@ public class LocalStoreCleaned {
         this.latitude = latitude;
         this.longitude = longitude;
         this.location = location;
+        this.uuid = uuid;
     }
 }
