@@ -17,10 +17,12 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "local_store_cleaned")
 @Getter
+@Setter
 @NoArgsConstructor
 public class LocalStoreCleaned {
 
