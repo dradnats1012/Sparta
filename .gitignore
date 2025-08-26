@@ -37,7 +37,9 @@ out/
 .vscode/
 
 application.yml
-.env
+*.yml
+*.yaml
+*.env
 
 /logs
 my.cnf
