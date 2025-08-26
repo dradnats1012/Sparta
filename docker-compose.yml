@@ -121,19 +121,62 @@ services:
       SPRING_DATASOURCE_SHARD4_URL: jdbc:mysql://mysql-shard4:3306/${SHARD4_DB}
       SPRING_DATASOURCE_SHARD_USERNAME: ${SPRING_DATASOURCE_SHARD_USERNAME}
       SPRING_DATASOURCE_SHARD_PASSWORD: ${SPRING_DATASOURCE_SHARD_PASSWORD}
-
-
-  postgres:
-    image: postgres:16
-    container_name: sparta-postgresql
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5433:5432"
+      LOG_DIR: /logs
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./logs:/logs
+
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+
+  grafana:
+    image: "grafana/grafana"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    restart: always
+    depends_on:
+      - prometheus
+
+  loki:
+    image: grafana/loki:2.9.8
+    container_name: sparta-loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./grafana/loki-config.yaml:/etc/loki/local-config.yaml:ro
+    restart: unless-stopped
+
+  promtail:
+    image: grafana/promtail:2.9.8
+    container_name: sparta-promtail
+    volumes:
+      - ./logs:/var/log/sparta:ro
+      - ./grafana/promtail-config.yml:/etc/promtail/config.yml:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    restart: unless-stopped
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: sparta-node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - ./grafana/textfile:/textfile
+    command: --collector.textfile.directory=/textfile
+    restart: unless-stopped
+
 
 volumes:
   mysql_data:
@@ -141,4 +184,4 @@ volumes:
   mysql_shard2_data:
   mysql_shard3_data:
   mysql_shard4_data:
-  postgres_data:
+  node_textfile:
