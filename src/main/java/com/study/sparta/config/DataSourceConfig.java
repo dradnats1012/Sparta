@@ -1,3 +1,4 @@
+/*
 package com.study.sparta.config;
 
 import javax.sql.DataSource;
@@ -63,4 +64,4 @@ public class DataSourceConfig {
     public JdbcTemplate s4JdbcTemplate(@Qualifier("s4DataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
-}
+}*/

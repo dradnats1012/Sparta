@@ -1,3 +1,4 @@
+/*
 package com.study.sparta;
 
 import java.lang.reflect.Proxy;
@@ -46,4 +47,4 @@ public class ConnectionUsageLogger {
             }
         );
     }
-}
+}*/
