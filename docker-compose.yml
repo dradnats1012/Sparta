@@ -19,112 +19,117 @@ services:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_0900_ai_ci
 
-  mysql-shard1:
-    image: mysql:8.4.0
-    container_name: sparta-mysql-shard1
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${SHARD1_DB}
-    ports:
-      - "3308:3306"
-    volumes:
-      - mysql_shard1_data:/var/lib/mysql
-      - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
-    command: >
-      --server-id=1
-      --sql_mode=""
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_0900_ai_ci
-      --auto_increment_increment=4
-      --auto_increment_offset=1
+# mysql-shard1:
+#   image: mysql:8.4.0
+#   container_name: sparta-mysql-shard1
+#   environment:
+#     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#     MYSQL_DATABASE: ${SHARD1_DB}
+#   ports:
+#     - "3308:3306"
+#   volumes:
+#     - mysql_shard1_data:/var/lib/mysql
+#     - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
+#   command: >
+#     --server-id=1
+#     --sql_mode=""
+#     --character-set-server=utf8mb4
+#     --collation-server=utf8mb4_0900_ai_ci
+#     --auto_increment_increment=4
+#     --auto_increment_offset=1
 
-  mysql-shard2:
-    image: mysql:8.4.0
-    container_name: sparta-mysql-shard2
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${SHARD2_DB}
-    ports:
-      - "3309:3306"
-    volumes:
-      - mysql_shard2_data:/var/lib/mysql
-      - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
-    command: >
-      --server-id=2
-      --sql_mode=""
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_0900_ai_ci
-      --auto_increment_increment=4
-      --auto_increment_offset=2
+# mysql-shard2:
+#   image: mysql:8.4.0
+#   container_name: sparta-mysql-shard2
+#   environment:
+#     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#     MYSQL_DATABASE: ${SHARD2_DB}
+#   ports:
+#     - "3309:3306"
+#   volumes:
+#     - mysql_shard2_data:/var/lib/mysql
+#     - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
+#   command: >
+#     --server-id=2
+#     --sql_mode=""
+#     --character-set-server=utf8mb4
+#     --collation-server=utf8mb4_0900_ai_ci
+#     --auto_increment_increment=4
+#     --auto_increment_offset=2
 
-  mysql-shard3:
-    image: mysql:8.4.0
-    container_name: sparta-mysql-shard3
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${SHARD3_DB}
-    ports:
-      - "3310:3306"
-    volumes:
-      - mysql_shard3_data:/var/lib/mysql
-      - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
-    command: >
-      --server-id=3
-      --sql_mode=""
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_0900_ai_ci
-      --auto_increment_increment=4
-      --auto_increment_offset=3
+# mysql-shard3:
+#   image: mysql:8.4.0
+#   container_name: sparta-mysql-shard3
+#   environment:
+#     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#     MYSQL_DATABASE: ${SHARD3_DB}
+#   ports:
+#     - "3310:3306"
+#   volumes:
+#     - mysql_shard3_data:/var/lib/mysql
+#     - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
+#   command: >
+#     --server-id=3
+#     --sql_mode=""
+#     --character-set-server=utf8mb4
+#     --collation-server=utf8mb4_0900_ai_ci
+#     --auto_increment_increment=4
+#     --auto_increment_offset=3
 
-  mysql-shard4:
-    image: mysql:8.4.0
-    container_name: sparta-mysql-shard4
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${SHARD4_DB}
-    ports:
-      - "3311:3306"
-    volumes:
-      - mysql_shard4_data:/var/lib/mysql
-      - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
-    command: >
-      --server-id=4
-      --sql_mode=""
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_0900_ai_ci
-      --auto_increment_increment=4
-      --auto_increment_offset=4
+# mysql-shard4:
+#   image: mysql:8.4.0
+#   container_name: sparta-mysql-shard4
+#   environment:
+#     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#     MYSQL_DATABASE: ${SHARD4_DB}
+#   ports:
+#     - "3311:3306"
+#   volumes:
+#     - mysql_shard4_data:/var/lib/mysql
+#     - ./mysql-config/my.cnf:/etc/mysql/conf.d/my.cnf
+#   command: >
+#     --server-id=4
+#     --sql_mode=""
+#     --character-set-server=utf8mb4
+#     --collation-server=utf8mb4_0900_ai_ci
+#     --auto_increment_increment=4
+#     --auto_increment_offset=4
 
-  springboot:
+  springboot-blue:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sparta-api
+    container_name: springboot-blue
     ports:
-      - "8081:8080"
+      - "8082:8081"
     depends_on:
       - mysql
-      - mysql-shard1
-      - mysql-shard2
-      - mysql-shard3
-      - mysql-shard4
     environment:
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
-      SERVER_SERVLET_CONTEXT_PATH: /api
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      # 샤드 DB
-      SPRING_DATASOURCE_SHARD1_URL: jdbc:mysql://mysql-shard1:3306/${SHARD1_DB}
-      SPRING_DATASOURCE_SHARD2_URL: jdbc:mysql://mysql-shard2:3306/${SHARD2_DB}
-      SPRING_DATASOURCE_SHARD3_URL: jdbc:mysql://mysql-shard3:3306/${SHARD3_DB}
-      SPRING_DATASOURCE_SHARD4_URL: jdbc:mysql://mysql-shard4:3306/${SHARD4_DB}
-      SPRING_DATASOURCE_SHARD_USERNAME: ${SPRING_DATASOURCE_SHARD_USERNAME}
-      SPRING_DATASOURCE_SHARD_PASSWORD: ${SPRING_DATASOURCE_SHARD_PASSWORD}
       LOG_DIR: /logs
     volumes:
       - ./logs:/logs
 
+  springboot-green:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot-green
+    ports:
+      - "8083:8081"
+    depends_on:
+      - mysql
+    environment:
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "*"
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      LOG_DIR: /logs
+    volumes:
+      - ./green-logs:/logs
 
   prometheus:
     image: prom/prometheus
@@ -139,9 +144,10 @@ services:
   grafana:
     image: "grafana/grafana"
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./grafana/data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     restart: always
     depends_on:
       - prometheus
@@ -177,7 +183,6 @@ services:
     command: --collector.textfile.directory=/textfile
     restart: unless-stopped
 
-
 volumes:
   mysql_data:
   mysql_shard1_data:
@@ -185,3 +190,6 @@ volumes:
   mysql_shard3_data:
   mysql_shard4_data:
   node_textfile:
+
+networks:
+  default:
