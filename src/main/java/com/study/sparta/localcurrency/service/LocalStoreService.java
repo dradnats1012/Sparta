@@ -66,6 +66,7 @@ public class LocalStoreService {
         UUID uuid = UUID.fromString(uuidStr);
 
         LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getByUuid(uuid);
+        localStoreCleaned.plusHits();
         return GetLocalStoreMainDTO.from(localStoreCleaned);
     }
 }

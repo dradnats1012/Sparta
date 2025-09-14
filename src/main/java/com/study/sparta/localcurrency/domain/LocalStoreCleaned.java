@@ -86,6 +86,10 @@ public class LocalStoreCleaned {
     @Column(name = "uuid", columnDefinition = "BINARY(16)", unique = true)
     private UUID uuid;
 
+    @Schema(description = "조회수")
+    @Column(name = "hits")
+    private Long hits;
+
     @Builder
     public LocalStoreCleaned(
         String storeName,
@@ -101,7 +105,8 @@ public class LocalStoreCleaned {
         Double latitude,
         Double longitude,
         Point location,
-        UUID uuid
+        UUID uuid,
+        Long hits
     ) {
         this.storeName = storeName;
         this.localBill = localBill;
@@ -117,5 +122,10 @@ public class LocalStoreCleaned {
         this.longitude = longitude;
         this.location = location;
         this.uuid = uuid;
+        this.hits = hits;
+    }
+
+    public void plusHits(){
+        hits++;
     }
 }
