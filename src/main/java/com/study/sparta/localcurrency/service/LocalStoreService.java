@@ -62,11 +62,13 @@ public class LocalStoreService {
         return stores.stream().map(GetSimpleLocalStoreDTO::from).toList();
     }
 
+    @Transactional
     public GetLocalStoreMainDTO getByUuid(String uuidStr) {
         UUID uuid = UUID.fromString(uuidStr);
 
         LocalStoreCleaned localStoreCleaned = localStoreCleanedRepository.getByUuid(uuid);
         localStoreCleaned.plusHits();
+        localStoreCleanedRepository.save(localStoreCleaned);
         return GetLocalStoreMainDTO.from(localStoreCleaned);
     }
 }

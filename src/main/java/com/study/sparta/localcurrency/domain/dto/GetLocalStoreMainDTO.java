@@ -13,7 +13,8 @@ public record GetLocalStoreMainDTO(
     String sectorName,
     String address,
     Double latitude,
-    Double longitude
+    Double longitude,
+    Long hits
 ) {
 
     public static GetLocalStoreMainDTO from(LocalStoreCleaned store) {
@@ -26,7 +27,8 @@ public record GetLocalStoreMainDTO(
             store.getSectorName(),
             store.getAddress(),
             store.getLatitude(),
-            store.getLongitude()
+            store.getLongitude(),
+            store.getHits()
         );
     }
 }
