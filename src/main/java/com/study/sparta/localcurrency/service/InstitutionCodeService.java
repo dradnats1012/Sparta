@@ -2,12 +2,14 @@ package com.study.sparta.localcurrency.service;
 
 import static com.study.sparta.localcurrency.domain.dto.GetInstitutionCodesDTO.GetInstitutionCodeDTO;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.study.sparta.localcurrency.domain.InstitutionCode;
 import com.study.sparta.localcurrency.domain.dto.GetInstitutionCodesDTO;
+import com.study.sparta.localcurrency.domain.dto.GetInstitutionNamePosition;
 import com.study.sparta.localcurrency.domain.dto.GetInstitutionNamesDTO;
 import com.study.sparta.localcurrency.repository.InstitutionCodeRepository;
 
@@ -37,5 +39,12 @@ public class InstitutionCodeService {
             .toList();
 
         return new GetInstitutionNamesDTO(regionNames);
+    }
+
+    public List<GetInstitutionNamePosition> getInstitutionNamesAndPosition() {
+        return repository.findAll().stream()
+            .map(GetInstitutionNamePosition::from)
+            .sorted(Comparator.comparing(GetInstitutionNamePosition::regionName))
+            .toList();
     }
 }

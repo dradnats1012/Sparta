@@ -38,4 +38,10 @@ public class InstitutionCode {
     @JdbcTypeCode(Types.BINARY)
     @Column(name = "uuid", columnDefinition = "BINARY(16)", unique = true)
     private UUID uuid;
+
+    @Column(name = "latitude", nullable = false)
+    private Double latitude;
+
+    @Column(name = "longitude", nullable = false)
+    private Double longitude;
 }
