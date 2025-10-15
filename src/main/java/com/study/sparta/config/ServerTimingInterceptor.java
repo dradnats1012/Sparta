@@ -20,10 +20,14 @@ public class ServerTimingInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception{
-        Long startTime = (Long) request.getAttribute(START_TIME);
-        if(startTime != null){
-            long duration = System.currentTimeMillis() - startTime;
+    }
 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        Long startTime = (Long) request.getAttribute(START_TIME);
+
+        if(startTime != null && !response.isCommitted()){
+            long duration = System.currentTimeMillis() - startTime;
             String serverTimingHeader = String.format("app;dur=%d;desc=\"Application Processing\"", duration);
 
             response.addHeader("Server-Timing", serverTimingHeader);
